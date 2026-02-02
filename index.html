@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine?</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Segoe UI", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      /* 🌅 Clean sunset background */
+      background: linear-gradient(180deg, #ff758c, #ffb199);
+    }
+
+    /* Floating hearts (subtle) */
+    .heart {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 18px;
+      animation: floatUp 7s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      20% { opacity: 1; }
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+
+    .box {
+      z-index: 2;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 35px 45px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 26px;
+      color: #c9184a;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 12px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: #adb5bd;
+      color: black;
+      position: absolute;
+      width: 100px;
+      height: 45px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button id="yes" onclick="yesClicked()">Yes</button>
+    <button id="no">No</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+
+    function dodgeNo(e) {
+      e.preventDefault();
+
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // Dodge on click/tap
+    noBtn.addEventListener("mousedown", dodgeNo);
+    noBtn.addEventListener("touchstart", dodgeNo);
+
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          font-size:32px;
+          font-family:'Segoe UI', Arial;
+          color:white;
+          background:linear-gradient(180deg,#ff758c,#ffb199);">
+          💘 You chose perfectly 💘
+        </div>`;
+    }
+
+    // Generate subtle hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }, 900);
+  </script>
+
+</body>
+</html>
